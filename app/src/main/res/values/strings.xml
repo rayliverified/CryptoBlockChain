@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">CryptoBlockChain</string>
+    <string name="adcolony_app_id">app216feb81b12f4392a0</string>
+    <string name="adcolony_zone_id">vz2d00d0a7b33344699b</string>
+
 </resources>

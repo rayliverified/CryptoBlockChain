@@ -15,6 +15,9 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardItem;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
+import com.adcolony.sdk.AdColony;
+import com.adcolony.sdk.AdColonyInterstitial;
+import com.adcolony.sdk.AdColonyInterstitialListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     Context mContext;
 
+    AdColonyInterstitial mAdColonyInterstitial;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         mBtn5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mAdColonyInterstitial.show();
             }
         });
         mBtn6.setOnClickListener(new View.OnClickListener() {
@@ -147,6 +151,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         loadGoogleRewardedVideo();
+
+        AdColony.configure(this, getString(R.string.adcolony_app_id), getString(R.string.adcolony_zone_id));
+        AdColonyInterstitialListener listener = new AdColonyInterstitialListener() {
+            @Override
+            public void onRequestFilled(AdColonyInterstitial ad) {
+                //Store and use this ad object to show your ad when appropriate
+                mAdColonyInterstitial = ad;
+            }
+        };
+
+        AdColony.requestInterstitial(getString(R.string.adcolony_zone_id), listener);
     }
 
     public void loadGoogleRewardedVideo() {
