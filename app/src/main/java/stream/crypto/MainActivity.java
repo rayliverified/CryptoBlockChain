@@ -1,6 +1,7 @@
 package stream.crypto;
 
 import android.content.Context;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,9 +32,12 @@ public class MainActivity extends AppCompatActivity {
     InterstitialAd mInterstitialAd;
     RewardedVideoAd mRewardedVideoAd;
 
+    AdColonyInterstitial mAdColonyInterstitial;
+
+    boolean adColonyLoaded = false;
+
     Context mContext;
 
-    AdColonyInterstitial mAdColonyInterstitial;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +86,14 @@ public class MainActivity extends AppCompatActivity {
         mBtn5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mAdColonyInterstitial.show();
+                if (adColonyLoaded)
+                {
+                    mAdColonyInterstitial.show();
+                }
+                else
+                {
+                    loadAdColonyVideo();
+                }
             }
         });
         mBtn6.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Google Interstitials Initialization
         MobileAds.initialize(mContext, "ca-app-pub-3940256099942544~3347511713");
         mInterstitialAd = new InterstitialAd(mContext);
         mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
@@ -105,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+        //Google Rewarded Video Initialization
         mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(mContext);
         mRewardedVideoAd.setRewardedVideoAdListener(new RewardedVideoAdListener() {
             @Override
@@ -152,19 +165,32 @@ public class MainActivity extends AppCompatActivity {
         });
         loadGoogleRewardedVideo();
 
+        //AdColony Initialization
         AdColony.configure(this, getString(R.string.adcolony_app_id), getString(R.string.adcolony_zone_id));
+
+        Handler handler = new Handler();
+        Runnable r1 = new Runnable() {
+            public void run() {
+                loadAdColonyVideo();
+            }
+        };
+        handler.postDelayed(r1, 100);
+    }
+
+    public void loadGoogleRewardedVideo() {
+        mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917", new AdRequest.Builder().build());
+    }
+
+    public void loadAdColonyVideo()
+    {
         AdColonyInterstitialListener listener = new AdColonyInterstitialListener() {
             @Override
             public void onRequestFilled(AdColonyInterstitial ad) {
                 //Store and use this ad object to show your ad when appropriate
                 mAdColonyInterstitial = ad;
+                adColonyLoaded = true;
             }
         };
-
         AdColony.requestInterstitial(getString(R.string.adcolony_zone_id), listener);
-    }
-
-    public void loadGoogleRewardedVideo() {
-        mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917", new AdRequest.Builder().build());
     }
 }
