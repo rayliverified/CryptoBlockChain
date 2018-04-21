@@ -6,11 +6,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.reward.RewardItem;
+import com.google.android.gms.ads.reward.RewardedVideoAd;
+import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     TextView mBtn6;
 
     InterstitialAd mInterstitialAd;
+    RewardedVideoAd mRewardedVideoAd;
 
     Context mContext;
 
@@ -38,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         mBtn5 = findViewById(R.id.btn_5);
         mBtn6 = findViewById(R.id.btn_6);
 
+        //Show Google Interstitials
         mBtn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,10 +54,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        //Show Google Rewarded Video
         mBtn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (mRewardedVideoAd.isLoaded()) {
+                    mRewardedVideoAd.show();
+                }
             }
         });
         mBtn3.setOnClickListener(new View.OnClickListener() {
@@ -91,5 +100,56 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+
+        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(mContext);
+        mRewardedVideoAd.setRewardedVideoAdListener(new RewardedVideoAdListener() {
+            @Override
+            public void onRewarded(RewardItem reward) {
+                Toast.makeText(mContext, "onRewarded! currency: " + reward.getType() + "  amount: " + reward.getAmount(), Toast.LENGTH_SHORT).show();
+                // Reward the user.
+            }
+
+            @Override
+            public void onRewardedVideoAdLeftApplication() {
+                Toast.makeText(mContext, "onRewardedVideoAdLeftApplication", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onRewardedVideoAdClosed() {
+                Toast.makeText(mContext, "onRewardedVideoAdClosed", Toast.LENGTH_SHORT).show();
+                // Load the next rewarded video ad.
+                loadGoogleRewardedVideo();
+            }
+
+            @Override
+            public void onRewardedVideoAdFailedToLoad(int errorCode) {
+                Toast.makeText(mContext, "onRewardedVideoAdFailedToLoad", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onRewardedVideoAdLoaded() {
+                Toast.makeText(mContext, "onRewardedVideoAdLoaded", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onRewardedVideoAdOpened() {
+                Toast.makeText(mContext, "onRewardedVideoAdOpened", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onRewardedVideoStarted() {
+                Toast.makeText(mContext, "onRewardedVideoStarted", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onRewardedVideoCompleted() {
+                Toast.makeText(mContext, "onRewardedVideoCompleted", Toast.LENGTH_SHORT).show();
+            }
+        });
+        loadGoogleRewardedVideo();
+    }
+
+    public void loadGoogleRewardedVideo() {
+        mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917", new AdRequest.Builder().build());
     }
 }
