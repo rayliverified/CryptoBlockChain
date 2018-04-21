@@ -7,6 +7,10 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.adcolony.sdk.AdColony;
+import com.adcolony.sdk.AdColonyInterstitial;
+import com.adcolony.sdk.AdColonyInterstitialListener;
+
 public class MainActivity extends AppCompatActivity {
 
     TextView mBtn1;
@@ -15,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
     TextView mBtn4;
     TextView mBtn5;
     TextView mBtn6;
+
+    AdColonyInterstitial mAdColonyInterstitial;
 
     Context mContext;
 
@@ -58,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         mBtn5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mAdColonyInterstitial.show();
             }
         });
         mBtn6.setOnClickListener(new View.OnClickListener() {
@@ -67,5 +73,16 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        AdColony.configure(this, getString(R.string.adcolony_app_id), getString(R.string.adcolony_zone_id));
+        AdColonyInterstitialListener listener = new AdColonyInterstitialListener() {
+            @Override
+            public void onRequestFilled(AdColonyInterstitial ad) {
+                //Store and use this ad object to show your ad when appropriate
+                mAdColonyInterstitial = ad;
+            }
+        };
+
+        AdColony.requestInterstitial(getString(R.string.adcolony_zone_id), listener);
     }
 }
