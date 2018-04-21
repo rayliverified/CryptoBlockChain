@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "461875272923",
+    "firebase_url": "https://cryptoblockchain-4e4c5.firebaseio.com",
+    "project_id": "cryptoblockchain-4e4c5",
+    "storage_bucket": "cryptoblockchain-4e4c5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:461875272923:android:a75eae9212fcbc32",
+        "android_client_info": {
+          "package_name": "stream.crypto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "461875272923-lkqpdpernem32kujvkr3apudfs7l5fov.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "stream.crypto",
+            "certificate_hash": "a56c8e8d8d2652e17df2f05a52c8ef22ce25ccda"
+          }
+        },
+        {
+          "client_id": "461875272923-pbf1jf5q544qrfsrc54qlhihllg72oju.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6DbJeQFWVUyEiK5QLDhZiX-2ixvtCpp8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "461875272923-pbf1jf5q544qrfsrc54qlhihllg72oju.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
