@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#EB4E84</color>
+    <color name="colorPrimaryDark">#AF2F77</color>
+    <color name="colorPrimaryLight">#F166B9</color>
+    <color name="colorAccent">#8A4CCB</color>
+    <color name="colorAccentLight">#ac5eff</color>
+
+    <!-- Basic Colors -->
+    <color name="white">#FFFFFF</color>
+
+    <!-- Gradient Colors -->
+    <color name="blue_start">#0068F8</color>
+    <color name="blue_end">#00B7F4</color>
+    <color name="purple_start">#8A4CCB</color>
+    <color name="purple_end">#F166B9</color>
+    <color name="green_start">#8DE1A3</color>
+    <color name="green_end">#D1F685</color>
+    <color name="yellow_start">#FFE39D</color>
+    <color name="yellow_end">#FC8295</color>
+    <color name="red_start">#AF2F77</color>
+    <color name="red_end">#EB4E84</color>
+</resources>
