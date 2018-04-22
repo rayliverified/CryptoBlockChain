@@ -23,6 +23,17 @@
         <activity android:name="com.adcolony.sdk.AdColonyAdViewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:hardwareAccelerated="true"/>
+        <meta-data android:name="applovin.sdk.key"
+            android:value="TPhlLLCJOvao1yPgTwyVXUVV1EvDUQTyq9g9VuTun2go-5TX_P2XuX1wnx8FLbB9msJGkn8VqqHpvlLv9NQ1wR"  />
+        <activity android:name="com.applovin.adview.AppLovinInterstitialActivity" android:configChanges="orientation|screenSize"/>
+        <activity android:name="com.applovin.adview.AppLovinConfirmationActivity" android:configChanges="orientation|screenSize"/>
+
     </application>
+    <!-- These permissions are mandatory to run AppLovin SDK -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <!-- These permissions are strongly recommended and will result in higher performance -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="18" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 </manifest>
