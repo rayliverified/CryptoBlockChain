@@ -39,6 +39,7 @@ import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 //import com.moos.library.HorizontalProgressView;
 
 import java.util.Date;
+import java.util.Random;
 
 public class RoomActivity extends AppCompatActivity {
 
@@ -66,7 +67,7 @@ public class RoomActivity extends AppCompatActivity {
 
     int clicks = 0;
     int enemyDeaths = 1;
-    int mheroHealth= 30;
+    int mheroHealth= 100;
 
     InterstitialAd mInterstitialAd;
     RewardedVideoAd mRewardedVideoAd;
@@ -220,8 +221,6 @@ public class RoomActivity extends AppCompatActivity {
                 if (mRewardedVideoAd.isLoaded()) {
                     mRewardedVideoAd.show();
                 }
-                clicks += 1;
-                heroHealth = mheroHealth;
                 //heroMoney -= 40;
                 //mMoneyText.setText("$" + Integer.toString(heroMoney));
             }
@@ -235,6 +234,7 @@ public class RoomActivity extends AppCompatActivity {
             @Override
             public void onAdClosed() {
                 // Load the next interstitial.
+                heroAmmo += 50;
                 mInterstitialAd.loadAd(new AdRequest.Builder().build());
             }
         });
@@ -244,47 +244,47 @@ public class RoomActivity extends AppCompatActivity {
         mRewardedVideoAd.setRewardedVideoAdListener(new RewardedVideoAdListener() {
             @Override
             public void onRewarded(RewardItem reward) {
-                Toast.makeText(mContext, "onRewarded! currency: " + reward.getType() + "  amount: " + reward.getAmount(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "onRewarded! currency: " + reward.getType() + "  amount: " + reward.getAmount(), Toast.LENGTH_SHORT).show();
                 // Reward the user.
-                heroMoney += 10;
+                heroHealth = mheroHealth;
                 //mMoneyText.setText("$" + Integer.toString(heroMoney));
             }
 
             @Override
             public void onRewardedVideoAdLeftApplication() {
-                Toast.makeText(mContext, "onRewardedVideoAdLeftApplication", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "onRewardedVideoAdLeftApplication", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onRewardedVideoAdClosed() {
-                Toast.makeText(mContext, "onRewardedVideoAdClosed", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "onRewardedVideoAdClosed", Toast.LENGTH_SHORT).show();
                 // Load the next rewarded video ad.
                 loadGoogleRewardedVideo();
             }
 
             @Override
             public void onRewardedVideoAdFailedToLoad(int errorCode) {
-                Toast.makeText(mContext, "onRewardedVideoAdFailedToLoad", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "onRewardedVideoAdFailedToLoad", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onRewardedVideoAdLoaded() {
-                Toast.makeText(mContext, "onRewardedVideoAdLoaded", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "onRewardedVideoAdLoaded", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onRewardedVideoAdOpened() {
-                Toast.makeText(mContext, "onRewardedVideoAdOpened", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "onRewardedVideoAdOpened", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onRewardedVideoStarted() {
-                Toast.makeText(mContext, "onRewardedVideoStarted", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "onRewardedVideoStarted", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onRewardedVideoCompleted() {
-                Toast.makeText(mContext, "onRewardedVideoCompleted", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "onRewardedVideoCompleted", Toast.LENGTH_SHORT).show();
             }
         });
         loadGoogleRewardedVideo();
@@ -390,11 +390,12 @@ public class RoomActivity extends AppCompatActivity {
     public void enemydeath(){
 
         enemyDeaths+=1;
-        heroMoney+= 100*.5*enemyDeaths;
-        mheroHealth= 30*enemyDeaths;
-        heroHealth=mheroHealth;
-        enemyHealth=40*enemyDeaths;
-        heroAmmo+= 50;
+//        heroMoney+= 100*.5*enemyDeaths;
+//        mheroHealth= 30*enemyDeaths;
+//        heroHealth=mheroHealth;
+        Random r = new Random();
+        enemyHealth = 50 + r.nextInt(50);
+//        heroAmmo+= 50;
     }
 
     public void loadGoogleRewardedVideo() {
