@@ -29,6 +29,8 @@ import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 import com.moos.library.HorizontalProgressView;
 
+import java.util.Date;
+
 public class RoomActivity extends AppCompatActivity {
 
     FrameLayout mRoomLayout;
@@ -45,6 +47,7 @@ public class RoomActivity extends AppCompatActivity {
     int enemyHealth = 100;
 
     int gameHandlerTick = 1000;
+    int exitTime = 0;
 
     InterstitialAd mInterstitialAd;
     RewardedVideoAd mRewardedVideoAd;
@@ -63,6 +66,8 @@ public class RoomActivity extends AppCompatActivity {
     final String HERO_AMMO = "HERO_AMMO";
     final String ENEMY_HEALTH = "ENEMY_HEALTH";
 
+    final String EXIT_TIME = "EXIT_TIME";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +79,9 @@ public class RoomActivity extends AppCompatActivity {
         heroHealth = sharedPreferences.getInt(HERO_HEALTH, 0);
         heroAmmo = sharedPreferences.getInt(HERO_AMMO, 0);
         enemyHealth = sharedPreferences.getInt(ENEMY_HEALTH, 0);
+        exitTime = sharedPreferences.getInt(EXIT_TIME, 0);
+
+        CalculateTimeElapsed();
 
         mRoomLayout = findViewById(R.id.room_layout);
         mHeroHealthBar = findViewById(R.id.hero_health);
@@ -178,7 +186,10 @@ public class RoomActivity extends AppCompatActivity {
         adHandler.postDelayed(new Runnable(){
             public void run(){
                 //Do something
-                heroAmmo -= 1;
+                if (heroAmmo > 0)
+                {
+                    heroAmmo -= 1;
+                }
                 UpdateUI();
 
                 //Redo this method
@@ -190,12 +201,23 @@ public class RoomActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        Date currentDate = new Date();
+        exitTime = (int) (currentDate.getTime() / 1000);
+
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(HERO_MONEY, heroMoney);
         editor.putInt(HERO_HEALTH, heroHealth);
         editor.putInt(HERO_AMMO, heroAmmo);
         editor.putInt(ENEMY_HEALTH, enemyHealth);
+        editor.putInt(EXIT_TIME, exitTime);
         editor.apply();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        CalculateTimeElapsed();
+        UpdateUI();
     }
 
     public void UpdateUI()
@@ -203,6 +225,26 @@ public class RoomActivity extends AppCompatActivity {
         //Set player text values.
         mHeroAmmoText.setText(String.format("Ammo: %d", heroAmmo));
         mHeroHealthText.setText(String.format("Health: %d", heroHealth));
+    }
+
+    public void CalculateTimeElapsed()
+    {
+        Date currentDate = new Date();
+        int currentTime = (int) (currentDate.getTime() / 1000);
+        if (exitTime == 0)
+        {
+            exitTime = currentTime;
+        }
+
+        int timeElapsed = currentTime - exitTime;
+
+        //Calculate changed stats
+        heroAmmo -= timeElapsed;
+        //Before setting ammo to 0, the amount of ammo spent can be used to calculate damage and enemies killed.
+        if (heroAmmo < 0)
+        {
+            heroAmmo = 0;
+        }
     }
 
     public void loadGoogleRewardedVideo() {
