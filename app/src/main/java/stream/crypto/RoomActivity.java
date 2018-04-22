@@ -319,10 +319,10 @@ public class RoomActivity extends AppCompatActivity {
                     mHeroImage.setImageDrawable(getDrawable(R.drawable.hero_static));
                 }
                 UpdateUI();
-                if(enemyHealth==0){
+                if(enemyHealth <= 0){
                     enemydeath();
                 }
-                if(heroHealth==0){
+                if(heroHealth <= 0){
                     checkDeath();
                 }
                 UpdateUI();
@@ -362,6 +362,7 @@ public class RoomActivity extends AppCompatActivity {
         //Set player text values.
         mHeroAmmoText.setText(String.format("Ammo: %d", heroAmmo));
         mHeroHealthText.setText(String.format("Health: %d", heroHealth));
+        mHeroHealthBar.setText(String.format("%d", heroHealth));
         mMoneyText.setText(String.format("$%d", heroMoney));
         mEnemyHealthBar.setText(Integer.toString(enemyHealth));
     }
@@ -432,13 +433,12 @@ public class RoomActivity extends AppCompatActivity {
         } );
     }
     public void checkDeath(){
-        if (heroHealth<=0){
+        if (heroHealth <= 0){
             heroHealth = mheroHealth;
             heroAmmo = 100;
             enemyDeaths-=2;
             enemydeath();
             heroMoney=0;
-
         }
     }
 }

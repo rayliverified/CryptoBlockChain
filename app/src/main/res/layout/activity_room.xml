@@ -85,12 +85,14 @@
             android:id="@+id/ammo_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
             android:layout_gravity="center_vertical"
             android:text="Ammo: 100"/>
 
         <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_marginLeft="6dp"
             android:layout_gravity="center_vertical"
             android:src="@drawable/bg_rectangle_green_solid"/>
 
@@ -98,12 +100,14 @@
             android:id="@+id/health_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
             android:layout_gravity="center_vertical"
             android:text="Health: 100"/>
 
         <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_marginLeft="6dp"
             android:layout_gravity="center_vertical"
             android:src="@drawable/bg_rectangle_green_solid"/>
 
@@ -111,6 +115,7 @@
             android:id="@+id/money_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
             android:layout_gravity="center_vertical"
             android:text="$100"/>
     </LinearLayout>
@@ -133,6 +138,7 @@
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:layout_marginRight="6dp"
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/bg_rectangle_green_solid"/>
 
@@ -150,7 +156,7 @@
                     android:paddingRight="12dp"
                     android:layout_marginTop="6dp"
                     android:layout_marginBottom="6dp"
-                    android:layout_marginLeft="2dp"
+                    android:layout_marginLeft="6dp"
                     android:layout_marginRight="2dp"
                     android:layout_gravity="center_vertical"
                     android:text="Get"
@@ -170,6 +176,7 @@
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:layout_marginRight="6dp"
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/bg_rectangle_green_solid"/>
 
@@ -187,7 +194,7 @@
                     android:paddingRight="12dp"
                     android:layout_marginTop="6dp"
                     android:layout_marginBottom="6dp"
-                    android:layout_marginLeft="2dp"
+                    android:layout_marginLeft="6dp"
                     android:layout_marginRight="2dp"
                     android:layout_gravity="center_vertical"
                     android:text="Get"
@@ -207,6 +214,7 @@
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:layout_marginRight="6dp"
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/bg_rectangle_green_solid"/>
 
@@ -224,7 +232,7 @@
                     android:paddingRight="12dp"
                     android:layout_marginTop="6dp"
                     android:layout_marginBottom="6dp"
-                    android:layout_marginLeft="2dp"
+                    android:layout_marginLeft="6dp"
                     android:layout_marginRight="2dp"
                     android:layout_gravity="center_vertical"
                     android:text="Get"
