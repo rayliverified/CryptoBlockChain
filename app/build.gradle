@@ -24,6 +24,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-ads:15.0.0'
     implementation 'com.android.support:support-annotations:27.1.1'
     implementation 'com.adcolony:sdk:3.3.2'
+    implementation 'com.applovin:applovin-sdk:7.8.6'
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -9,6 +9,15 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.applovin.adview.AppLovinInterstitialAd;
+import com.applovin.adview.AppLovinInterstitialAdDialog;
+import com.applovin.sdk.AppLovinAd;
+import com.applovin.sdk.AppLovinAdClickListener;
+import com.applovin.sdk.AppLovinAdDisplayListener;
+import com.applovin.sdk.AppLovinAdLoadListener;
+import com.applovin.sdk.AppLovinAdSize;
+import com.applovin.sdk.AppLovinAdVideoPlaybackListener;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
@@ -16,6 +25,7 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardItem;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
+import com.applovin.sdk.AppLovinSdk;
 import com.adcolony.sdk.AdColony;
 import com.adcolony.sdk.AdColonyInterstitial;
 import com.adcolony.sdk.AdColonyInterstitialListener;
@@ -32,7 +42,10 @@ public class MainActivity extends AppCompatActivity {
     InterstitialAd mInterstitialAd;
     RewardedVideoAd mRewardedVideoAd;
 
+     AppLovinAd loadedAd;
+
     AdColonyInterstitial mAdColonyInterstitial;
+
 
     boolean adColonyLoaded = false;
 
@@ -74,7 +87,39 @@ public class MainActivity extends AppCompatActivity {
         mBtn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AppLovinInterstitialAdDialog interstitialAd = AppLovinInterstitialAd.create( AppLovinSdk.getInstance(mContext), mContext);
 
+                // Optional: Assign listeners
+                interstitialAd.setAdDisplayListener(new AppLovinAdDisplayListener() {
+                    @Override
+                    public void adDisplayed(AppLovinAd appLovinAd) {
+
+                    }
+
+                    @Override
+                    public void adHidden(AppLovinAd appLovinAd) {
+                        loadAppLovinVideo();
+                    }
+                });
+                interstitialAd.setAdClickListener(new AppLovinAdClickListener() {
+                    @Override
+                    public void adClicked(AppLovinAd appLovinAd) {
+
+                    }
+                });
+                interstitialAd.setAdVideoPlaybackListener(new AppLovinAdVideoPlaybackListener() {
+                    @Override
+                    public void videoPlaybackBegan(AppLovinAd appLovinAd) {
+
+                    }
+
+                    @Override
+                    public void videoPlaybackEnded(AppLovinAd appLovinAd, double v, boolean b) {
+
+                    }
+                });
+
+                interstitialAd.showAndRender(loadedAd);
             }
         });
         mBtn4.setOnClickListener(new View.OnClickListener() {
@@ -172,6 +217,7 @@ public class MainActivity extends AppCompatActivity {
         Runnable r1 = new Runnable() {
             public void run() {
                 loadAdColonyVideo();
+                loadAppLovinVideo();
             }
         };
         handler.postDelayed(r1, 100);
@@ -192,5 +238,24 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         AdColony.requestInterstitial(getString(R.string.adcolony_zone_id), listener);
+    }
+
+    public void loadAppLovinVideo()
+    {
+        AppLovinSdk.initializeSdk(mContext);
+        AppLovinSdk.getInstance(mContext).getAdService().loadNextAd( AppLovinAdSize.INTERSTITIAL, new AppLovinAdLoadListener()
+        {
+            @Override
+            public void adReceived(AppLovinAd ad)
+            {
+                loadedAd = ad;
+            }
+
+            @Override
+            public void failedToReceiveAd(int errorCode)
+            {
+                // Look at AppLovinErrorCodes.java for list of error codes.
+            }
+        } );
     }
 }
