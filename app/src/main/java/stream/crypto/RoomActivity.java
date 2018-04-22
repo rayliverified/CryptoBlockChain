@@ -311,6 +311,10 @@ public class RoomActivity extends AppCompatActivity {
                     heroAmmo -= 1;
                     enemyHealth -=1;
                     mEnemyHealthBar.setText(Integer.toString(enemyHealth));
+
+                    heroHealth -=1;
+                    mHeroHealthBar.setText(Integer.toString(heroHealth));
+
                 }
                 UpdateUI();
                 if(enemyHealth==0){
