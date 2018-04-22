@@ -18,6 +18,10 @@ android {
 }
 
 dependencies {
+    repositories {
+        jcenter()
+        maven { url 'https://jitpack.io' }
+    }
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.google.android.gms:play-services-ads:15.0.0'
@@ -25,6 +29,8 @@ dependencies {
     implementation 'com.android.support:support-annotations:27.1.1'
     implementation 'com.adcolony:sdk:3.3.2'
     implementation 'com.applovin:applovin-sdk:7.8.6'
+    implementation 'com.moos:Material-ProgressView:1.0.2' //https://github.com/Moosphan/Material-ProgressView
+    implementation 'com.github.bumptech.glide:glide:4.6.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

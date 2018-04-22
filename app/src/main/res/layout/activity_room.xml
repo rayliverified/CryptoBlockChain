@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.moos.library.HorizontalProgressView
+        android:id="@+id/health_bar"
+        android:layout_width="320dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_gravity="center_horizontal"
+        app:start_color="#FF4877"
+        app:end_color="#418FFE"
+        app:track_width="12dp"
+        app:end_progress="0"
+        app:corner_radius="12dp"
+        app:isTracked="true"
+        app:trackColor="#f4f4f4"
+        app:progressTextVisibility="false"/>
+
+    <FrameLayout
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/bg_rectangle_red_solid">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/enemy_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginBottom="12dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/bg_rectangle_green_solid"/>
+
+            <ImageView
+                android:id="@+id/hero_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="6dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/bg_rectangle_green_solid"/>
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>
