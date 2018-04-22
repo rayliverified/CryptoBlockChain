@@ -1,7 +1,9 @@
 package stream.crypto;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Handler;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,23 +40,41 @@ public class MainActivity extends AppCompatActivity {
     TextView mBtn5;
     TextView mBtn6;
 
+    TextView moneydisplay;
+    int heroMoney = 0;
+    int heroHealth = 0;
+    int enemyHealth = 100;
+
     InterstitialAd mInterstitialAd;
     RewardedVideoAd mRewardedVideoAd;
 
-     AppLovinAd loadedAd;
-
+    AppLovinAd loadedAd;
     AdColonyInterstitial mAdColonyInterstitial;
-
 
     boolean adColonyLoaded = false;
 
     Context mContext;
+    SharedPreferences sharedPreferences;
+
+    final String HERO_HEALTH = "HERO_HEALTH";
+    final String HERO_MONEY = "HERO_MONEY";
+    final String ENEMY_HEALTH = "ENEMY_HEALTH";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mContext = getApplication().getApplicationContext();
+        sharedPreferences = getSharedPreferences("Account", Context.MODE_PRIVATE);
+
+        heroHealth = sharedPreferences.getInt(HERO_HEALTH, 0);
+        heroMoney = sharedPreferences.getInt(HERO_MONEY, 0);
+        enemyHealth = sharedPreferences.getInt(ENEMY_HEALTH, 0);
+        Log.d("Main", "SharedPrefs Restore");
+
+        moneydisplay=findViewById(R.id.moneydisplay);
+        moneydisplay.setText("$:" + Integer.toString(heroMoney));
 
         mBtn1 = findViewById(R.id.btn_1);
         mBtn2 = findViewById(R.id.btn_2);
@@ -93,6 +113,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void adDisplayed(AppLovinAd appLovinAd) {
 
+                        heroMoney += 1;
+                        moneydisplay.setText("$:" + Integer.toString(heroMoney));
                     }
 
                     @Override
@@ -133,6 +155,9 @@ public class MainActivity extends AppCompatActivity {
                 if (adColonyLoaded)
                 {
                     mAdColonyInterstitial.show();
+
+                    heroMoney += 1;
+                    moneydisplay.setText("$:" + Integer.toString(heroMoney));
                 }
                 else
                 {
@@ -143,7 +168,8 @@ public class MainActivity extends AppCompatActivity {
         mBtn6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                heroMoney += 1;
+                moneydisplay.setText("$:" + Integer.toString(heroMoney));
             }
         });
 
@@ -168,6 +194,8 @@ public class MainActivity extends AppCompatActivity {
             public void onRewarded(RewardItem reward) {
                 Toast.makeText(mContext, "onRewarded! currency: " + reward.getType() + "  amount: " + reward.getAmount(), Toast.LENGTH_SHORT).show();
                 // Reward the user.
+                heroMoney+=10;
+                moneydisplay.setText("$:" + Integer.toString(heroMoney));
             }
 
             @Override
@@ -205,6 +233,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onRewardedVideoCompleted() {
                 Toast.makeText(mContext, "onRewardedVideoCompleted", Toast.LENGTH_SHORT).show();
+                heroMoney+=1;
+                moneydisplay.setText("$:" + Integer.toString(heroMoney));
             }
         });
         loadGoogleRewardedVideo();
@@ -220,6 +250,17 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         handler.postDelayed(r1, 100);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("Main", "Pause");
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(HERO_HEALTH, heroHealth);
+        editor.putInt(HERO_MONEY, heroMoney);
+        editor.putInt(ENEMY_HEALTH, enemyHealth);
+        editor.apply();
     }
 
     public void loadGoogleRewardedVideo() {
