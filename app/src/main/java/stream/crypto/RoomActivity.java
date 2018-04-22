@@ -28,6 +28,7 @@ import com.applovin.sdk.AppLovinAdLoadListener;
 import com.applovin.sdk.AppLovinAdSize;
 import com.applovin.sdk.AppLovinAdVideoPlaybackListener;
 import com.applovin.sdk.AppLovinSdk;
+import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
@@ -104,8 +105,6 @@ public class RoomActivity extends AppCompatActivity {
         clicks = sharedPreferences.getInt(CLICKS, 0);
         mheroHealth = sharedPreferences.getInt(MHERO_HEALTH, 30);
 
-        CalculateTimeElapsed();
-
         mRoomLayout = findViewById(R.id.room_layout);
         mHeroHealthBar = findViewById(R.id.hero_health);
         mEnemyHealthBar = findViewById(R.id.enemy_health);
@@ -118,8 +117,9 @@ public class RoomActivity extends AppCompatActivity {
         mHealthPotion = findViewById(R.id.btn_healthp);
         ammo50 = findViewById(R.id.ammo50);
         ammo300 = findViewById(R.id.ammo300);
-        //Use this to load image into the ImageViews.
-//        Glide.with(mContext).asDrawable().load(getDrawable(R.drawable.bg_rectangle_green_solid)).into(mEnemyImage);
+
+//        Use this to load image into the ImageViews.
+        Glide.with(mContext).asDrawable().load(getDrawable(R.drawable.bg_rectangle_green_solid)).into(mEnemyImage);
 
         //Use this to set Hero Progress Bar.
         //mHeroHealthBar.setEndProgress(100);
@@ -287,6 +287,8 @@ public class RoomActivity extends AppCompatActivity {
         });
         loadGoogleRewardedVideo();
 
+        CalculateTimeElapsed();
+
         //AdColony Initialization
         AdColony.configure(this, getString(R.string.adcolony_app_id), getString(R.string.adcolony_zone_id));
 
@@ -308,9 +310,7 @@ public class RoomActivity extends AppCompatActivity {
                 {
                     heroAmmo -= 1;
                     enemyHealth -=1;
-                    mEnemyHealthBar.setText(enemyHealth);
-
-
+                    mEnemyHealthBar.setText(Integer.toString(enemyHealth));
                 }
                 UpdateUI();
                 if(enemyHealth==0){
@@ -324,8 +324,6 @@ public class RoomActivity extends AppCompatActivity {
             }
         }, gameHandlerTick);
     }
-
-
 
     @Override
     protected void onPause() {
