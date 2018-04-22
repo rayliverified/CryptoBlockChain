@@ -119,7 +119,8 @@ public class RoomActivity extends AppCompatActivity {
         ammo300 = findViewById(R.id.ammo300);
 
 //        Use this to load image into the ImageViews.
-        Glide.with(mContext).asDrawable().load(getDrawable(R.drawable.bg_rectangle_green_solid)).into(mEnemyImage);
+        Glide.with(mContext).asGif().load(R.drawable.hero_punch_down).into(mEnemyImage);
+        Glide.with(mContext).asGif().load(R.drawable.hero_punch).into(mHeroImage);
 
         //Use this to set Hero Progress Bar.
         //mHeroHealthBar.setEndProgress(100);
@@ -137,6 +138,7 @@ public class RoomActivity extends AppCompatActivity {
                 heroAmmo += 1;
                 mHeroAmmoText.setText(String.format("Ammo: %d", heroAmmo));
                 clicks += 1;
+                Glide.with(mContext).asGif().load(R.drawable.hero_punch).into(mHeroImage);
                 if((clicks % 30) == 0 || (clicks % 50) == 0) {
                     if (mInterstitialAd.isLoaded()) {
                         mInterstitialAd.show();
@@ -310,7 +312,11 @@ public class RoomActivity extends AppCompatActivity {
                 {
                     heroAmmo -= 1;
                     enemyHealth -=1;
-                    mEnemyHealthBar.setText(Integer.toString(enemyHealth));
+                }
+                else
+                {
+                    heroHealth -= 1;
+                    mHeroImage.setImageDrawable(getDrawable(R.drawable.hero_static));
                 }
                 UpdateUI();
                 if(enemyHealth==0){
@@ -319,6 +325,7 @@ public class RoomActivity extends AppCompatActivity {
                 if(heroHealth==0){
                     checkDeath();
                 }
+                UpdateUI();
                 //Redo this method
                 mGameHandler.postDelayed(this, gameHandlerTick);
             }
@@ -356,6 +363,7 @@ public class RoomActivity extends AppCompatActivity {
         mHeroAmmoText.setText(String.format("Ammo: %d", heroAmmo));
         mHeroHealthText.setText(String.format("Health: %d", heroHealth));
         mMoneyText.setText(String.format("$%d", heroMoney));
+        mEnemyHealthBar.setText(Integer.toString(enemyHealth));
     }
 
     public void CalculateTimeElapsed()

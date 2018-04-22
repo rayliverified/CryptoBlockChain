@@ -10,7 +10,7 @@
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/room0000"
+        android:background="@drawable/bg_rectangle_green_solid"
         android:clickable="true"
         android:focusable="true">
 
@@ -25,7 +25,9 @@
             android:layout_gravity="center_horizontal|top"
             android:gravity="center"
             android:text="100"
-            android:textColor="@color/white"/>
+            android:textSize="20dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/hero_health"
@@ -38,7 +40,9 @@
             android:layout_gravity="center_horizontal|bottom"
             android:gravity="center"
             android:text="100"
-            android:textColor="@color/white"/>
+            android:textSize="20dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
 
         <LinearLayout
             android:layout_width="311dp"
@@ -50,7 +54,7 @@
                 android:id="@+id/enemy_image"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginBottom="-16dp"
+                android:layout_marginBottom="-18dp"
                 android:layout_gravity="center_horizontal"
                 android:src="@drawable/hero_punch_down"/>
 
@@ -58,7 +62,7 @@
                 android:id="@+id/hero_image"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginTop="-16dp"
+                android:layout_marginTop="-18dp"
                 android:layout_gravity="center_horizontal"
                 android:src="@drawable/hero_punch"/>
         </LinearLayout>
@@ -83,7 +87,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:text="Ammo: 100"/>
-
 
         <ImageView
             android:layout_width="40dp"
@@ -154,7 +157,7 @@
                     android:textColor="@color/white"
                     android:src="@drawable/icon_arrow_right_white_fit"
                     android:foreground="@drawable/bg_ripple_rectangle"
-                    android:background="@drawable/bg_rectangle_purple"
+                    android:background="@drawable/btn_red"
                     android:elevation="8dp"/>
             </LinearLayout>
 
@@ -191,7 +194,7 @@
                     android:textColor="@color/white"
                     android:src="@drawable/icon_arrow_right_white_fit"
                     android:foreground="@drawable/bg_ripple_rectangle"
-                    android:background="@drawable/bg_rectangle_purple"
+                    android:background="@drawable/btn_red"
                     android:elevation="8dp"/>
             </LinearLayout>
 
@@ -228,7 +231,7 @@
                     android:textColor="@color/white"
                     android:src="@drawable/icon_arrow_right_white_fit"
                     android:foreground="@drawable/bg_ripple_rectangle"
-                    android:background="@drawable/bg_rectangle_purple"
+                    android:background="@drawable/btn_green"
                     android:elevation="8dp"/>
             </LinearLayout>
         </LinearLayout>

@@ -8,6 +8,7 @@
 
     <!-- Basic Colors -->
     <color name="white">#FFFFFF</color>
+    <color name="green_background">#93c052</color>
 
     <!-- Gradient Colors -->
     <color name="blue_start">#0068F8</color>
