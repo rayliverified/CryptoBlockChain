@@ -15,41 +15,29 @@
         android:clickable="true"
         android:focusable="true">
 
-        <com.moos.library.HorizontalProgressView
+        <TextView
             android:id="@+id/enemy_health"
             android:layout_width="80dp"
-            android:layout_height="6dp"
+            android:layout_height="36dp"
             android:layout_marginTop="36dp"
             android:layout_marginBottom="12dp"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
             android:layout_gravity="center_horizontal|top"
-            app:start_color="#FF4877"
-            app:end_color="#418FFE"
-            app:track_width="12dp"
-            app:end_progress="0"
-            app:corner_radius="2dp"
-            app:isTracked="true"
-            app:trackColor="#f4f4f4"
-            app:progressTextVisibility="false"/>
+           android:text="100"
+            android:textColor="@color/white"/>
 
-        <com.moos.library.HorizontalProgressView
+        <TextView
             android:id="@+id/hero_health"
             android:layout_width="80dp"
-            android:layout_height="6dp"
+            android:layout_height="36dp"
             android:layout_marginTop="12dp"
             android:layout_marginBottom="36dp"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
-            android:layout_gravity="center_horizontal|bottom"
-            app:start_color="#FF4877"
-            app:end_color="#418FFE"
-            app:track_width="12dp"
-            app:end_progress="0"
-            app:corner_radius="2dp"
-            app:isTracked="true"
-            app:trackColor="#f4f4f4"
-            app:progressTextVisibility="false"/>
+            android:layout_gravity="center|bottom"
+            android:text="100"
+            android:textColor="@color/white"/>
 
         <LinearLayout
             android:layout_width="311dp"

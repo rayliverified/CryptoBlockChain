@@ -35,15 +35,15 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardItem;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
-import com.moos.library.HorizontalProgressView;
+//import com.moos.library.HorizontalProgressView;
 
 import java.util.Date;
 
 public class RoomActivity extends AppCompatActivity {
 
     FrameLayout mRoomLayout;
-    HorizontalProgressView mHeroHealthBar;
-    HorizontalProgressView mEnemyHealthBar;
+    TextView mHeroHealthBar;
+    TextView mEnemyHealthBar;
     TextView mMoneyText;
 
     ImageView mEnemyImage;
@@ -122,12 +122,12 @@ public class RoomActivity extends AppCompatActivity {
 //        Glide.with(mContext).asDrawable().load(getDrawable(R.drawable.bg_rectangle_green_solid)).into(mEnemyImage);
 
         //Use this to set Hero Progress Bar.
-        mHeroHealthBar.setEndProgress(100);
-        mHeroHealthBar.startProgressAnimation();
+        //mHeroHealthBar.setEndProgress(100);
+        //mHeroHealthBar.startProgressAnimation();
 
         //Use this to set Enemy Progress Bar.
-        mEnemyHealthBar.setEndProgress(100);
-        mEnemyHealthBar.startProgressAnimation();
+        //mEnemyHealthBar.setEndProgress(100);
+        //mEnemyHealthBar.startProgressAnimation();
 
 
 
@@ -307,6 +307,10 @@ public class RoomActivity extends AppCompatActivity {
                 if (heroAmmo > 0)
                 {
                     heroAmmo -= 1;
+                    enemyHealth -=1;
+                    mEnemyHealthBar.setText(enemyHealth);
+
+
                 }
                 UpdateUI();
                 if(enemyHealth==0){
