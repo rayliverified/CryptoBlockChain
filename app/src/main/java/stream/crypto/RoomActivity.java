@@ -28,7 +28,6 @@ import com.applovin.sdk.AppLovinAdLoadListener;
 import com.applovin.sdk.AppLovinAdSize;
 import com.applovin.sdk.AppLovinAdVideoPlaybackListener;
 import com.applovin.sdk.AppLovinSdk;
-import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
@@ -45,7 +44,7 @@ public class RoomActivity extends AppCompatActivity {
     FrameLayout mRoomLayout;
     HorizontalProgressView mHeroHealthBar;
     HorizontalProgressView mEnemyHealthBar;
-    TextView moneydisplay;
+    TextView mMoneyText;
 
     ImageView mEnemyImage;
     ImageView mHeroImage;
@@ -54,7 +53,7 @@ public class RoomActivity extends AppCompatActivity {
 
     Button ammo50;
     Button ammo300;
-    Button healthp;
+    Button mHealthPotion;
 
     int heroMoney = 0;
     int heroHealth = 0;
@@ -86,7 +85,7 @@ public class RoomActivity extends AppCompatActivity {
     final String HERO_AMMO = "HERO_AMMO";
     final String ENEMY_HEALTH = "ENEMY_HEALTH";
     final String EnemyDeaths = "EnemyDeaths";
-    final String Clicks = "Clicks";
+    final String CLICKS = "CLICKS";
 
     final String EXIT_TIME = "EXIT_TIME";
 
@@ -102,11 +101,10 @@ public class RoomActivity extends AppCompatActivity {
         heroAmmo = sharedPreferences.getInt(HERO_AMMO, 0);
         enemyHealth = sharedPreferences.getInt(ENEMY_HEALTH, 0);
         exitTime = sharedPreferences.getInt(EXIT_TIME, 0);
-        clicks = sharedPreferences.getInt(Clicks, 0);
+        clicks = sharedPreferences.getInt(CLICKS, 0);
         mheroHealth = sharedPreferences.getInt(MHERO_HEALTH, 30);
 
         CalculateTimeElapsed();
-
 
         mRoomLayout = findViewById(R.id.room_layout);
         mHeroHealthBar = findViewById(R.id.hero_health);
@@ -115,9 +113,9 @@ public class RoomActivity extends AppCompatActivity {
         mHeroImage = findViewById(R.id.hero_image);
         mHeroHealthText = findViewById(R.id.health_text);
         mHeroAmmoText = findViewById(R.id.ammo_text);
+        mMoneyText = findViewById(R.id.money_text);
 
-
-        healthp = findViewById(R.id.healthp);
+        mHealthPotion = findViewById(R.id.btn_healthp);
         ammo50 = findViewById(R.id.ammo50);
         ammo300 = findViewById(R.id.ammo300);
         //Use this to load image into the ImageViews.
@@ -127,14 +125,20 @@ public class RoomActivity extends AppCompatActivity {
         mHeroHealthBar.setEndProgress(80);
         mHeroHealthBar.startProgressAnimation();
 
-        UpdateUI();
 
         mRoomLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 heroAmmo += 1;
                 mHeroAmmoText.setText(String.format("Ammo: %d", heroAmmo));
-
+                clicks += 1;
+                if((clicks % 30) == 0 || (clicks % 50) == 0) {
+                    if (mInterstitialAd.isLoaded()) {
+                        mInterstitialAd.show();
+                    } else {
+                        Log.d("TAG", "The interstitial wasn't loaded yet.");
+                    }
+                }
             }
         });
         ammo300.setOnClickListener(new View.OnClickListener() {
@@ -148,7 +152,7 @@ public class RoomActivity extends AppCompatActivity {
                     public void adDisplayed(AppLovinAd appLovinAd) {
 
                         heroAmmo+= 300;
-                        //moneydisplay.setText("$" + Integer.toString(heroMoney));
+                        //mMoneyText.setText("$" + Integer.toString(heroMoney));
                     }
 
                     @Override
@@ -189,17 +193,17 @@ public class RoomActivity extends AppCompatActivity {
                 clicks += 1;
                 heroMoney -= 30;
                 heroAmmo += 50;
-                //moneydisplay.setText("$" + Integer.toString(heroMoney));
+                //mMoneyText.setText("$" + Integer.toString(heroMoney));
             }
         });
 
-        healthp.setOnClickListener(new View.OnClickListener() {
+        mHealthPotion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 clicks += 1;
                 heroHealth = mheroHealth;
                 heroMoney -= 40;
-                //moneydisplay.setText("$" + Integer.toString(heroMoney));
+                //mMoneyText.setText("$" + Integer.toString(heroMoney));
             }
         });
         //Google Interstitials Initialization
@@ -223,7 +227,7 @@ public class RoomActivity extends AppCompatActivity {
                 Toast.makeText(mContext, "onRewarded! currency: " + reward.getType() + "  amount: " + reward.getAmount(), Toast.LENGTH_SHORT).show();
                 // Reward the user.
                 heroMoney += 10;
-                //moneydisplay.setText("$" + Integer.toString(heroMoney));
+                //mMoneyText.setText("$" + Integer.toString(heroMoney));
             }
 
             @Override
@@ -310,7 +314,7 @@ public class RoomActivity extends AppCompatActivity {
         editor.putInt(ENEMY_HEALTH, enemyHealth);
         editor.putInt(EXIT_TIME, exitTime);
         editor.putInt(EnemyDeaths, enemyDeaths);
-        editor.putInt(Clicks, clicks);
+        editor.putInt(CLICKS, clicks);
         editor.apply();
     }
 
@@ -326,14 +330,7 @@ public class RoomActivity extends AppCompatActivity {
         //Set player text values.
         mHeroAmmoText.setText(String.format("Ammo: %d", heroAmmo));
         mHeroHealthText.setText(String.format("Health: %d", heroHealth));
-        moneydisplay.setText(String.format("$%d", heroMoney));
-        if((clicks % 5) ==0 || clicks %8==0 ){
-            if (mInterstitialAd.isLoaded()) {
-                mInterstitialAd.show();
-            } else {
-                Log.d("TAG", "The interstitial wasn't loaded yet.");
-            }
-        }
+        mMoneyText.setText(String.format("$%d", heroMoney));
     }
 
     public void CalculateTimeElapsed()
