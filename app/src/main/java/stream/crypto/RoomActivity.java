@@ -312,7 +312,9 @@ public class RoomActivity extends AppCompatActivity {
                 if(enemyHealth==0){
                     enemydeath();
                 }
-
+                if(heroHealth==0){
+                    checkDeath();
+                }
                 //Redo this method
                 mGameHandler.postDelayed(this, gameHandlerTick);
             }
@@ -418,5 +420,15 @@ public class RoomActivity extends AppCompatActivity {
                 // Look at AppLovinErrorCodes.java for list of error codes.
             }
         } );
+    }
+    public void checkDeath(){
+        if (heroHealth<=0){
+            heroHealth = mheroHealth;
+            heroAmmo = 100;
+            enemyDeaths-=2;
+            enemydeath();
+            heroMoney=0;
+
+        }
     }
 }
