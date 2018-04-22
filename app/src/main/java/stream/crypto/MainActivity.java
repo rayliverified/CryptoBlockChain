@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("Main", "SharedPrefs Restore");
 
         moneydisplay=findViewById(R.id.moneydisplay);
-        moneydisplay.setText("$:" + Integer.toString(heroMoney));
+        moneydisplay.setText("$" + Integer.toString(heroMoney));
 
         mBtn1 = findViewById(R.id.btn_1);
         mBtn2 = findViewById(R.id.btn_2);
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                     public void adDisplayed(AppLovinAd appLovinAd) {
 
                         heroMoney += 1;
-                        moneydisplay.setText("$:" + Integer.toString(heroMoney));
+                        moneydisplay.setText("$" + Integer.toString(heroMoney));
                     }
 
                     @Override
@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
                     mAdColonyInterstitial.show();
 
                     heroMoney += 1;
-                    moneydisplay.setText("$:" + Integer.toString(heroMoney));
+                    moneydisplay.setText("$" + Integer.toString(heroMoney));
                 }
                 else
                 {
@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 heroMoney += 1;
-                moneydisplay.setText("$:" + Integer.toString(heroMoney));
+                moneydisplay.setText("$" + Integer.toString(heroMoney));
             }
         });
 
@@ -195,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(mContext, "onRewarded! currency: " + reward.getType() + "  amount: " + reward.getAmount(), Toast.LENGTH_SHORT).show();
                 // Reward the user.
                 heroMoney+=10;
-                moneydisplay.setText("$:" + Integer.toString(heroMoney));
+                moneydisplay.setText("$" + Integer.toString(heroMoney));
             }
 
             @Override
@@ -234,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
             public void onRewardedVideoCompleted() {
                 Toast.makeText(mContext, "onRewardedVideoCompleted", Toast.LENGTH_SHORT).show();
                 heroMoney+=1;
-                moneydisplay.setText("$:" + Integer.toString(heroMoney));
+                moneydisplay.setText("$" + Integer.toString(heroMoney));
             }
         });
         loadGoogleRewardedVideo();
