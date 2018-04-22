@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.adcolony.sdk.AdColony;
@@ -26,9 +27,12 @@ import com.moos.library.HorizontalProgressView;
 
 public class RoomActivity extends AppCompatActivity {
 
-    HorizontalProgressView mHealthBar;
+    HorizontalProgressView mHeroHealthBar;
+    HorizontalProgressView mEnemyHealthBar;
     ImageView mEnemyImage;
     ImageView mHeroImage;
+    TextView mHeroHealthText;
+    TextView mHeroAmmoText;
 
     InterstitialAd mInterstitialAd;
     RewardedVideoAd mRewardedVideoAd;
@@ -47,16 +51,21 @@ public class RoomActivity extends AppCompatActivity {
         setContentView(R.layout.activity_room);
         mContext = getApplication().getApplicationContext();
 
-        mHealthBar = findViewById(R.id.health_bar);
+        mHeroHealthBar = findViewById(R.id.hero_health);
+        mEnemyHealthBar = findViewById(R.id.enemy_health);
         mEnemyImage = findViewById(R.id.enemy_image);
         mHeroImage = findViewById(R.id.hero_image);
+        mHeroHealthText = findViewById(R.id.health_text);
+        mHeroAmmoText = findViewById(R.id.ammo_text);
 
         //Use this to load image into the ImageViews.
         Glide.with(mContext).asDrawable().load(getDrawable(R.drawable.bg_rectangle_green_solid)).into(mEnemyImage);
 
         //Use this to set Progress Bar.
-        mHealthBar.setEndProgress(80);
-        mHealthBar.startProgressAnimation();
+        mHeroHealthBar.setEndProgress(80);
+        mHeroHealthBar.startProgressAnimation();
+
+        //Set player text values.
 
         //Google Interstitials Initialization
         MobileAds.initialize(mContext, "ca-app-pub-3940256099942544~3347511713");
