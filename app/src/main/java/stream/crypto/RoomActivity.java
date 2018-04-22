@@ -187,17 +187,27 @@ public class RoomActivity extends AppCompatActivity {
             }
         });
 
-        //if(enemyHealth==0){
-        //    enemydeath();
-        //}
+
 
 
         ammo50.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 clicks += 1;
-                heroMoney -= 30;
+                //heroMoney -= 30;
                 heroAmmo += 50;
+                if (adColonyLoaded)
+                {
+                    mAdColonyInterstitial.show();
+
+                    heroMoney += 1;
+                    mMoneyText.setText("$" + Integer.toString(heroMoney));
+                }
+                else
+                {
+                    loadAdColonyVideo();
+                }
+
                 //mMoneyText.setText("$" + Integer.toString(heroMoney));
             }
         });
@@ -205,9 +215,12 @@ public class RoomActivity extends AppCompatActivity {
         mHealthPotion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mRewardedVideoAd.isLoaded()) {
+                    mRewardedVideoAd.show();
+                }
                 clicks += 1;
                 heroHealth = mheroHealth;
-                heroMoney -= 40;
+                //heroMoney -= 40;
                 //mMoneyText.setText("$" + Integer.toString(heroMoney));
             }
         });
@@ -288,7 +301,7 @@ public class RoomActivity extends AppCompatActivity {
         adHandler.postDelayed(r1, 100);
 
         mGameHandler = new Handler();
-        adHandler.postDelayed(new Runnable(){
+        mGameHandler.postDelayed(new Runnable(){
             public void run(){
                 //Do something
                 if (heroAmmo > 0)
@@ -296,6 +309,9 @@ public class RoomActivity extends AppCompatActivity {
                     heroAmmo -= 1;
                 }
                 UpdateUI();
+                if(enemyHealth==0){
+                    enemydeath();
+                }
 
                 //Redo this method
                 mGameHandler.postDelayed(this, gameHandlerTick);
