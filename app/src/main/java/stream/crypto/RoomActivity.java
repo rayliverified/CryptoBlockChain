@@ -1,9 +1,13 @@
 package stream.crypto;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +31,7 @@ import com.moos.library.HorizontalProgressView;
 
 public class RoomActivity extends AppCompatActivity {
 
+    FrameLayout mRoomLayout;
     HorizontalProgressView mHeroHealthBar;
     HorizontalProgressView mEnemyHealthBar;
     ImageView mEnemyImage;
@@ -34,23 +39,43 @@ public class RoomActivity extends AppCompatActivity {
     TextView mHeroHealthText;
     TextView mHeroAmmoText;
 
+    int heroMoney = 0;
+    int heroHealth = 0;
+    int heroAmmo = 0;
+    int enemyHealth = 100;
+
+    int gameHandlerTick = 1000;
+
     InterstitialAd mInterstitialAd;
     RewardedVideoAd mRewardedVideoAd;
 
     AppLovinAd loadedAd;
-
     AdColonyInterstitial mAdColonyInterstitial;
 
     boolean adColonyLoaded = false;
 
     Context mContext;
+    SharedPreferences sharedPreferences;
+    Handler mGameHandler;
+
+    final String HERO_MONEY = "HERO_MONEY";
+    final String HERO_HEALTH = "HERO_HEALTH";
+    final String HERO_AMMO = "HERO_AMMO";
+    final String ENEMY_HEALTH = "ENEMY_HEALTH";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room);
         mContext = getApplication().getApplicationContext();
+        sharedPreferences = getSharedPreferences("Account", Context.MODE_PRIVATE);
 
+        heroMoney = sharedPreferences.getInt(HERO_MONEY, 0);
+        heroHealth = sharedPreferences.getInt(HERO_HEALTH, 0);
+        heroAmmo = sharedPreferences.getInt(HERO_AMMO, 0);
+        enemyHealth = sharedPreferences.getInt(ENEMY_HEALTH, 0);
+
+        mRoomLayout = findViewById(R.id.room_layout);
         mHeroHealthBar = findViewById(R.id.hero_health);
         mEnemyHealthBar = findViewById(R.id.enemy_health);
         mEnemyImage = findViewById(R.id.enemy_image);
@@ -59,13 +84,21 @@ public class RoomActivity extends AppCompatActivity {
         mHeroAmmoText = findViewById(R.id.ammo_text);
 
         //Use this to load image into the ImageViews.
-        Glide.with(mContext).asDrawable().load(getDrawable(R.drawable.bg_rectangle_green_solid)).into(mEnemyImage);
+//        Glide.with(mContext).asDrawable().load(getDrawable(R.drawable.bg_rectangle_green_solid)).into(mEnemyImage);
 
         //Use this to set Progress Bar.
         mHeroHealthBar.setEndProgress(80);
         mHeroHealthBar.startProgressAnimation();
 
-        //Set player text values.
+        UpdateUI();
+
+        mRoomLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                heroAmmo += 1;
+                mHeroAmmoText.setText(String.format("Ammo: %d", heroAmmo));
+            }
+        });
 
         //Google Interstitials Initialization
         MobileAds.initialize(mContext, "ca-app-pub-3940256099942544~3347511713");
@@ -131,14 +164,45 @@ public class RoomActivity extends AppCompatActivity {
         //AdColony Initialization
         AdColony.configure(this, getString(R.string.adcolony_app_id), getString(R.string.adcolony_zone_id));
 
-        Handler handler = new Handler();
+        //Ad loading handler
+        Handler adHandler = new Handler();
         Runnable r1 = new Runnable() {
             public void run() {
                 loadAdColonyVideo();
                 loadAppLovinVideo();
             }
         };
-        handler.postDelayed(r1, 100);
+        adHandler.postDelayed(r1, 100);
+
+        mGameHandler = new Handler();
+        adHandler.postDelayed(new Runnable(){
+            public void run(){
+                //Do something
+                heroAmmo -= 1;
+                UpdateUI();
+
+                //Redo this method
+                mGameHandler.postDelayed(this, gameHandlerTick);
+            }
+        }, gameHandlerTick);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(HERO_MONEY, heroMoney);
+        editor.putInt(HERO_HEALTH, heroHealth);
+        editor.putInt(HERO_AMMO, heroAmmo);
+        editor.putInt(ENEMY_HEALTH, enemyHealth);
+        editor.apply();
+    }
+
+    public void UpdateUI()
+    {
+        //Set player text values.
+        mHeroAmmoText.setText(String.format("Ammo: %d", heroAmmo));
+        mHeroHealthText.setText(String.format("Health: %d", heroHealth));
     }
 
     public void loadGoogleRewardedVideo() {

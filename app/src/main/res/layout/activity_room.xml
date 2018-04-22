@@ -2,16 +2,18 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <FrameLayout
+        android:id="@+id/room_layout"
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/room0000">
+        android:background="@drawable/room0000"
+        android:clickable="true"
+        android:focusable="true">
 
         <com.moos.library.HorizontalProgressView
             android:id="@+id/enemy_health"
@@ -57,19 +59,19 @@
 
             <ImageView
                 android:id="@+id/enemy_image"
-                android:layout_width="192dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="12dp"
-                android:src="@drawable/knighttest"/>
-
-            <ImageView
-                android:id="@+id/hero_image"
                 android:layout_width="58dp"
                 android:layout_height="121dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="6dp"
                 android:src="@drawable/frame_1"/>
+
+            <ImageView
+                android:id="@+id/hero_image"
+                android:layout_width="192dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="12dp"
+                android:src="@drawable/knighttest"/>
         </LinearLayout>
     </FrameLayout>
 
@@ -169,7 +171,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="Get 250 Ammo"/>
+                    android:text="Get 300 Ammo"/>
 
                 <Button
                     android:id="@+id/btn_2"
