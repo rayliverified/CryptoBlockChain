@@ -79,7 +79,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/bg_rectangle_green_solid"/>
+            android:src="@drawable/glove"/>
 
         <TextView
             android:id="@+id/ammo_text"
@@ -94,7 +94,7 @@
             android:layout_height="40dp"
             android:layout_marginLeft="6dp"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/bg_rectangle_green_solid"/>
+            android:src="@drawable/health"/>
 
         <TextView
             android:id="@+id/health_text"
@@ -109,7 +109,8 @@
             android:layout_height="40dp"
             android:layout_marginLeft="6dp"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/bg_rectangle_green_solid"/>
+            android:src="@drawable/bg_rectangle_green_solid"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/money_text"
@@ -117,7 +118,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="6dp"
             android:layout_gravity="center_vertical"
-            android:text="$100"/>
+            android:text="$100"
+            android:visibility="gone"/>
     </LinearLayout>
 
     <ScrollView
@@ -140,7 +142,7 @@
                     android:layout_height="40dp"
                     android:layout_marginRight="6dp"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/bg_rectangle_green_solid"/>
+                    android:src="@drawable/glove"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -178,7 +180,7 @@
                     android:layout_height="40dp"
                     android:layout_marginRight="6dp"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/bg_rectangle_green_solid"/>
+                    android:src="@drawable/glove"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -216,7 +218,7 @@
                     android:layout_height="40dp"
                     android:layout_marginRight="6dp"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/bg_rectangle_green_solid"/>
+                    android:src="@drawable/health"/>
 
                 <TextView
                     android:layout_width="wrap_content"
