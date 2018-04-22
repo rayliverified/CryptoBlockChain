@@ -64,7 +64,7 @@ public class RoomActivity extends AppCompatActivity {
     int exitTime = 0;
 
     int clicks = 0;
-    int enemyDeaths = 0;
+    int enemyDeaths = 1;
     int mheroHealth= 30;
 
     InterstitialAd mInterstitialAd;
@@ -121,9 +121,14 @@ public class RoomActivity extends AppCompatActivity {
         //Use this to load image into the ImageViews.
 //        Glide.with(mContext).asDrawable().load(getDrawable(R.drawable.bg_rectangle_green_solid)).into(mEnemyImage);
 
-        //Use this to set Progress Bar.
-        mHeroHealthBar.setEndProgress(80);
+        //Use this to set Hero Progress Bar.
+        mHeroHealthBar.setEndProgress(100);
         mHeroHealthBar.startProgressAnimation();
+
+        //Use this to set Enemy Progress Bar.
+        mEnemyHealthBar.setEndProgress(100);
+        mEnemyHealthBar.startProgressAnimation();
+
 
 
         mRoomLayout.setOnClickListener(new View.OnClickListener() {
@@ -182,9 +187,9 @@ public class RoomActivity extends AppCompatActivity {
             }
         });
 
-        if(enemyHealth==0){
-            enemydeath();
-        }
+        //if(enemyHealth==0){
+        //    enemydeath();
+        //}
 
 
         ammo50.setOnClickListener(new View.OnClickListener() {
